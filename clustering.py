@@ -1,4 +1,4 @@
-from sklearn.mixture import GaussianMixture
+from sklearn.cluster import KMeans
 from sklearn import manifold
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,7 +12,7 @@ def cluster(file, cluster_num_list, save_dir):
   vis2d = tsne2d.fit_transform(data)
 
   for num in cluster_num_list:
-    gm = GaussianMixture(n_components=num).fit(data)
+    gm = KMeans(n_clusters=num).fit(data)
     pred = gm.predict(data)
     np.save(f'{save_dir}/{file}_{num}_pred.npy', pred)
 
@@ -27,4 +27,4 @@ def cluster(file, cluster_num_list, save_dir):
     plt.savefig(f'{save_dir}/{file}_{num}.png')
     plt.show()
 
-cluster('zh_resid_2015-08.npy', [10,30,50,100], 'Gaussian_Mixture_result')
+cluster('zh_resid_2015-08.npy', [10,30,50,100], 'KMeans_result')
